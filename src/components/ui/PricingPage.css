@@ -1,0 +1,156 @@
+/* Responsive Design Add-on for PricingPage */
+/* Import this CSS file in your project to add mobile responsiveness without changing the component code */
+
+/* Scroll hint for mobile users */
+@media (max-width: 640px) {
+  /* Add a subtle gradient fade on the right to indicate more content */
+  .overflow-x-auto::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 40px;
+    background: linear-gradient(to right, transparent, hsl(var(--background)));
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Remove fade when scrolled to the end */
+  .overflow-x-auto.scrolled-end::after {
+    display: none;
+  }
+}
+
+/* Mobile devices (up to 640px) */
+@media (max-width: 640px) {
+  /* Hero section adjustments */
+  .max-w-7xl.mx-auto.px-6.pt-32 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 5rem;
+  }
+
+  /* Hero title responsive sizing */
+  .text-5xl.md\:text-7xl {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  /* Hero description */
+  .text-xl.text-muted-foreground {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  /* Billing toggle wrapping */
+  .flex.items-center.justify-center.gap-4.mb-16 {
+    flex-wrap: wrap;
+  }
+
+  /* Table horizontal scroll - CRITICAL for mobile */
+  .overflow-x-auto {
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+  }
+
+  /* Ensure table doesn't shrink */
+  table {
+    min-width: 900px !important;
+    width: max-content;
+  }
+
+  /* Table cells reduced padding on mobile */
+  table th,
+  table td {
+    padding: 0.75rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    white-space: nowrap;
+  }
+
+  /* Sticky first column on mobile for better UX */
+  table td:first-child,
+  table th:first-child {
+    position: sticky;
+    left: 0;
+    background: hsl(var(--background));
+    z-index: 20;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    min-width: 120px;
+  }
+
+  /* Special styling for sticky header first cell */
+  table thead th:first-child {
+    background: hsl(var(--muted) / 0.5);
+    z-index: 30;
+  }
+
+  /* Category rows sticky first cell */
+  tbody tr.bg-gradient-to-r td:first-child {
+    background: linear-gradient(to right, hsl(var(--muted) / 0.7), hsl(var(--muted) / 0.4));
+  }
+
+  /* Make sure all columns are visible */
+  table th:nth-child(2),
+  table th:nth-child(3),
+  table th:nth-child(4),
+  table th:nth-child(5),
+  table td:nth-child(2),
+  table td:nth-child(3),
+  table td:nth-child(4),
+  table td:nth-child(5) {
+    min-width: 100px;
+  }
+
+  /* Scrollbar styling for better visibility */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.2);
+    border-radius: 4px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.5);
+    border-radius: 4px;
+  }
+
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.7);
+  }
+}
+
+/* Tablet devices (641px to 1023px) */
+@media (min-width: 641px) and (max-width: 1023px) {
+  /* Hero section */
+  .text-5xl.md\:text-7xl {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+
+  /* Pricing cards grid - 2 columns on tablet */
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Table also scrollable on tablets if needed */
+  .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Small tablets and large phones (641px to 767px) */
+@media (min-width: 641px) and (max-width: 767px) {
+  table th,
+  table td {
+    padding: 1rem 1.5rem !important;
+    font-size: 0.875rem;
+  }
+}

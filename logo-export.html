@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ObsFly Logo Export</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo-preview {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #e0e0e0;
+            margin: 10px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, hsl(262, 83%, 58%), hsl(217, 91%, 60%));
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .size-label {
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ObsFly Logo Export</h1>
+        <p>Click the buttons below to download the logo in different sizes</p>
+
+        <div class="logo-preview">
+            <h3>Small (256x256)</h3>
+            <canvas id="canvas-small" width="256" height="256"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadLogo('canvas-small', 'obsfly-logo-256.png')">
+                Download 256x256 PNG
+            </button>
+        </div>
+
+        <div class="logo-preview">
+            <h3>Medium (512x512)</h3>
+            <canvas id="canvas-medium" width="512" height="512"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadLogo('canvas-medium', 'obsfly-logo-512.png')">
+                Download 512x512 PNG
+            </button>
+        </div>
+
+        <div class="logo-preview">
+            <h3>Large (1024x1024)</h3>
+            <canvas id="canvas-large" width="1024" height="1024"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadLogo('canvas-large', 'obsfly-logo-1024.png')">
+                Download 1024x1024 PNG
+            </button>
+        </div>
+
+        <div class="logo-preview">
+            <h3>With Text (1200x400)</h3>
+            <canvas id="canvas-with-text" width="1200" height="400"></canvas>
+            <br>
+            <button class="download-btn" onclick="downloadLogo('canvas-with-text', 'obsfly-logo-with-text-1200x400.png')">
+                Download 1200x400 PNG
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Color definitions (Tetragon-inspired)
+        const colors = {
+            primary: 'hsl(262, 83%, 58%)',   // Purple
+            secondary: 'hsl(217, 91%, 60%)', // Blue
+            accent: 'hsl(142, 76%, 36%)',    // Green
+            light: 'hsl(262, 83%, 88%)',
+            secondaryLight: 'hsl(217, 91%, 88%)',
+            accentLight: 'hsl(142, 76%, 66%)'
+        };
+
+        function drawButterfly(ctx, scale, centerX, centerY) {
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.scale(scale, scale);
+
+            // Left Wing with gradient and data flow patterns
+            const leftWingGradient = ctx.createLinearGradient(-15, -17, -5, 0);
+            leftWingGradient.addColorStop(0, colors.primary);
+            leftWingGradient.addColorStop(1, colors.secondary);
+
+            ctx.fillStyle = leftWingGradient;
+            ctx.beginPath();
+            ctx.moveTo(-5, 0);
+            ctx.bezierCurveTo(-5, 0, -10, -5, -12, -8);
+            ctx.bezierCurveTo(-14, -11, -15, -15, -12, -17);
+            ctx.bezierCurveTo(-9, -19, -5, -15, -4, -12);
+            ctx.bezierCurveTo(-3, -9, -5, 0, -5, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Data dots on left wing
+            ctx.fillStyle = colors.light;
+            ctx.globalAlpha = 0.8;
+            ctx.beginPath();
+            ctx.arc(-9, -10, 0.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(-11, -7, 0.6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(-8, -5, 0.7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            // Right Wing with gradient and monitoring pattern
+            const rightWingGradient = ctx.createLinearGradient(5, -17, 15, 0);
+            rightWingGradient.addColorStop(0, colors.secondary);
+            rightWingGradient.addColorStop(1, colors.accent);
+
+            ctx.fillStyle = rightWingGradient;
+            ctx.beginPath();
+            ctx.moveTo(5, 0);
+            ctx.bezierCurveTo(5, 0, 10, -5, 12, -8);
+            ctx.bezierCurveTo(14, -11, 15, -15, 12, -17);
+            ctx.bezierCurveTo(9, -19, 5, -15, 4, -12);
+            ctx.bezierCurveTo(3, -9, 5, 0, 5, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Monitoring dots on right wing
+            ctx.fillStyle = colors.secondaryLight;
+            ctx.globalAlpha = 0.8;
+            ctx.beginPath();
+            ctx.arc(9, -10, 0.8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(11, -7, 0.6, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(8, -5, 0.7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            // Body with gradient and metric lines
+            const bodyGradient = ctx.createLinearGradient(0, -8, 0, 8);
+            bodyGradient.addColorStop(0, colors.primary);
+            bodyGradient.addColorStop(1, colors.secondary);
+
+            ctx.fillStyle = bodyGradient;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 2, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Observability metric lines in body
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.lineWidth = 0.4;
+            ctx.beginPath();
+            ctx.moveTo(-1.5, -2);
+            ctx.lineTo(1.5, -2);
+            ctx.moveTo(-1.5, 0);
+            ctx.lineTo(1.5, 0);
+            ctx.moveTo(-1.5, 2);
+            ctx.lineTo(1.5, 2);
+            ctx.stroke();
+
+            // Left Antenna with signal waves
+            ctx.strokeStyle = colors.primary;
+            ctx.lineWidth = 1;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(-2, -8);
+            ctx.quadraticCurveTo(-3, -12, -4, -14);
+            ctx.stroke();
+
+            // Right Antenna
+            ctx.beginPath();
+            ctx.moveTo(2, -8);
+            ctx.quadraticCurveTo(3, -12, 4, -14);
+            ctx.stroke();
+
+            // Signal indicators on antennae
+            const signalGradient = ctx.createRadialGradient(-4, -14, 0, -4, -14, 1);
+            signalGradient.addColorStop(0, colors.accentLight);
+            signalGradient.addColorStop(1, colors.accent);
+            ctx.fillStyle = signalGradient;
+            ctx.globalAlpha = 0.8;
+            ctx.beginPath();
+            ctx.arc(-4, -14, 1, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(4, -14, 1, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+
+            ctx.restore();
+        }
+
+        function drawLogoOnly(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Optional: Add background
+            // ctx.fillStyle = 'white';
+            // ctx.fillRect(0, 0, size, size);
+
+            // Draw butterfly in center
+            const scale = size / 40;
+            drawButterfly(ctx, scale, size / 2, size / 2);
+        }
+
+        function drawLogoWithText(canvasId, width, height) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Optional: Add background
+            // ctx.fillStyle = 'white';
+            // ctx.fillRect(0, 0, width, height);
+
+            // Draw butterfly logo on left
+            const logoSize = height * 0.6;
+            const logoScale = logoSize / 40;
+            const logoY = height / 2;
+            const logoX = height / 2;
+            drawButterfly(ctx, logoScale, logoX, logoY);
+
+            // Draw "ObsFly" text
+            const textX = logoX + logoSize / 2 + 40;
+            const fontSize = height * 0.35;
+            ctx.font = `bold ${fontSize}px system-ui, -apple-system, sans-serif`;
+
+            // Create gradient for text
+            const textGradient = ctx.createLinearGradient(textX, 0, textX + 400, 0);
+            textGradient.addColorStop(0, colors.primary);
+            textGradient.addColorStop(0.5, colors.secondary);
+            textGradient.addColorStop(1, colors.accent);
+
+            ctx.fillStyle = textGradient;
+            ctx.textBaseline = 'middle';
+            ctx.fillText('ObsFly', textX, logoY);
+        }
+
+        function downloadLogo(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Draw all logos on page load
+        window.onload = function() {
+            drawLogoOnly('canvas-small', 256);
+            drawLogoOnly('canvas-medium', 512);
+            drawLogoOnly('canvas-large', 1024);
+            drawLogoWithText('canvas-with-text', 1200, 400);
+        };
+    </script>
+</body>
+</html>
