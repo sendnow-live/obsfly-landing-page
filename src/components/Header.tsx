@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Activity, Server, Database, FileText, BarChart3, Eye, Cpu, TestTube, Container, Sparkles, ChevronDown, Link2, MonitorSmartphone, Search, ShoppingBag, Landmark, Gamepad2, Laptop, Cloud, Network } from "lucide-react";
+import { Activity, Server, Database, FileText, BarChart3, Eye, Cpu, TestTube, Container, Sparkles, ChevronDown, Link2, MonitorSmartphone, Search, ShoppingBag, Landmark, Gamepad2, Laptop, Cloud, Network, Menu, X } from "lucide-react";
 import ObsFlyLogo from './ObsFlyLogo';
 
 const productCategories = [
@@ -61,7 +61,6 @@ const productCategories = [
     link: "/products/ingress"
   }
 ];
-
 
 const solutionsData = {
   useCases: [
@@ -135,21 +134,20 @@ const solutionsData = {
 const Header = () => {
   const [showProductDropdown, setShowProductDropdown] = useState(false);
   const [showSolutionsDropdown, setShowSolutionsDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
-      <div className=" mx-auto pl-8 pr-90 w-auto mr-auto mb-auto ">
-        <div className="flex items-center justify-between h-20">
+      <div className="mx-auto pl-4 md:pl-8 pr-4 md:pr-8 w-auto">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-          
             <ObsFlyLogo size="md" animated={false} />
-            {/* <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              ObsFly
-            </span> */}
           </Link>
 
-          {/* Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {/* Product Dropdown */}
             <div
@@ -346,21 +344,167 @@ const Header = () => {
             </a>
           </nav>
 
-          {/* CTA */}
-          <div className="flex items-center gap-4">
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
             <Link to="/login">
               <Button style={{backgroundColor:'white', color:'black', border:'1px solid black'}}>
                 Log In
               </Button>
             </Link>
             <Link to="/get-started">
-              <Button className="bg-[#522b6c]  text-primary-foreground mr-4">
+              <Button className="bg-[#522b6c] text-primary-foreground">
                 Get Started Free
               </Button>
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-foreground"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-background border-t border-border">
+          <nav className="px-4 py-4 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            {/* Product Section */}
+            <div>
+              <button
+                onClick={() => setMobileProductOpen(!mobileProductOpen)}
+                className="flex items-center justify-between w-full text-left text-foreground font-medium py-2"
+              >
+                Product
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileProductOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileProductOpen && (
+                <div className="pl-4 mt-2 space-y-3">
+                  {productCategories.map((product, index) => (
+                    <a
+                      key={index}
+                      href={product.link}
+                      className="block py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-lg bg-[#593a6d]/10 text-[#593a6d]">
+                          <product.icon className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-foreground">{product.title}</h4>
+                            {product.badge && (
+                              <span className="px-2 py-0.5 text-[10px] font-medium bg-[#593a6d] text-white rounded-full">
+                                {product.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">{product.description}</p>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Solutions Section */}
+            <div>
+              <button
+                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                className="flex items-center justify-between w-full text-left text-foreground font-medium py-2"
+              >
+                Solutions
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSolutionsOpen && (
+                <div className="pl-4 mt-2 space-y-4">
+                  <div>
+                    <h3 className="text-xs font-semibold text-muted-foreground mb-2">USE CASES</h3>
+                    {solutionsData.useCases.map((useCase, index) => (
+                      <a
+                        key={index}
+                        href={useCase.link}
+                        className="block py-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <div className="flex items-start gap-2">
+                          <useCase.icon className="w-4 h-4 text-blue-600 mt-0.5" />
+                          <div>
+                            <h4 className="text-sm font-medium text-foreground">{useCase.title}</h4>
+                            <p className="text-xs text-muted-foreground">{useCase.description}</p>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  <div>
+                    <h3 className="text-xs font-semibold text-muted-foreground mb-2">INDUSTRIES</h3>
+                    {solutionsData.industries.map((industry, index) => (
+                      <a
+                        key={index}
+                        href={industry.link}
+                        className="block py-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <div className="flex items-start gap-2">
+                          <industry.icon className="w-4 h-4 text-purple-600 mt-0.5" />
+                          <div>
+                            <h4 className="text-sm font-medium text-foreground">{industry.title}</h4>
+                            <p className="text-xs text-muted-foreground">{industry.description}</p>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Other Links */}
+            <a
+              href="/pricing"
+              className="block text-foreground font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Pricing
+            </a>
+            <a
+              href="/docs"
+              className="block text-foreground font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Docs
+            </a>
+            <a
+              href="/blogs"
+              className="block text-foreground font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blogs
+            </a>
+
+            {/* Mobile CTA Buttons */}
+            <div className="pt-4 space-y-3 border-t border-border">
+              <Link to="/login" className="block" onClick={() => setMobileMenuOpen(false)}>
+                <Button className="w-full" style={{backgroundColor:'white', color:'black', border:'1px solid black'}}>
+                  Log In
+                </Button>
+              </Link>
+              <Link to="/get-started" className="block" onClick={() => setMobileMenuOpen(false)}>
+                <Button className="w-full bg-[#522b6c] text-primary-foreground">
+                  Get Started Free
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
