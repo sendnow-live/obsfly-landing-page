@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import ObsFlyLogo from "./ObsFlyLogo";
 
 const integrations = [
   {
@@ -192,7 +193,7 @@ export default function IntegrationsSection() {
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-[#593a6d] text-white border-blue-200 hover:bg-[#593a6d] p-2">
+          <Badge className="mb-4 bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-100">
             200+ Integrations
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -204,7 +205,7 @@ export default function IntegrationsSection() {
           </p>
           <Button
             size="lg"
-            className="bg-[#593a6d] hover:bg-[#593a6d] text-white group shadow-lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white group shadow-lg"
           >
             Explore All Integrations
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -212,36 +213,52 @@ export default function IntegrationsSection() {
         </div>
 
         {/* Integration Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mb-16">
-          {integrations.map((integration, index) => (
-            <Card
-              key={index}
-              className="group bg-white border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
-            >
-              <div className="p-6 flex flex-col items-center justify-center space-y-3 h-full">
-                {/* Logo */}
-                <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+       {/* Central Hub Design */}
+        {/* Central Hub Design */}
+      {/* Central Hub Design */}
+       {/* Central Hub Design */}
+        <div className="relative flex items-center justify-center mb-16 min-h-[600px]">
+          {/* Center Logo */}
+          <div className="absolute z-10 flex items-center justify-center">
+            <ObsFlyLogo className="w-24 h-24" />
+          </div>
+
+          {/* Language Integrations in Circular Layout */}
+          {integrations
+            .filter((i) => i.category === "Language" || i.category === "Runtime" || i.category === "Frontend" || i.category === "Framework")
+            .map((integration, index, arr) => {
+              const angle = (index * 360) / arr.length;
+              const radius = 280;
+              const x = Math.cos((angle * Math.PI) / 180) * radius;
+              const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+              return (
+                <div
+                  key={index}
+                  className="absolute group"
+                  style={{
+                    transform: `translate(${x}px, ${y}px)`,
+                  }}
+                >
+                  {/* Arrow pointing to center */}
+                  <div
+                    className="absolute left-1/2 top-1/2 w-36 h-0.5 origin-left"
+                    style={{
+                      transform: `rotate(${angle + 180}deg) translateY(-50%)`,
+                      background: 'linear-gradient(to left, #593a6d, transparent)',
+                    }}
+                  />
+
+                  {/* Integration Logo */}
                   <img
                     src={integration.logo}
                     alt={`${integration.name} logo`}
-                    className="w-12 h-12 object-contain"
+                    className="w-12 h-12 object-contain hover:scale-125 transition-transform cursor-pointer"
                   />
                 </div>
-
-                {/* Integration Info */}
-                <div className="text-center">
-                  <h3 className="text-sm font-semibold text-gray-900 group-hover:text-[#593a6d] transition-colors">
-                    {integration.name}
-                  </h3>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {integration.category}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          ))}
+              );
+            })}
         </div>
-
         {/* Features Section */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
           <div className="grid md:grid-cols-3 gap-8">
@@ -285,7 +302,7 @@ export default function IntegrationsSection() {
           <div className="mt-8 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-600">
               Can't find your tool? We add new integrations every week.{" "}
-              <a href="#" className="text-[#593a6d] hover:text-[#593a6d] font-medium">
+              <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
                 Request a custom integration
               </a>
             </p>
