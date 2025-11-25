@@ -47,7 +47,7 @@ const integrations = [
   {
     name: "C#",
     category: "Language",
-    logo: "https://cdn.simpleicons.org/csharp/239120",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
   },
   {
     name: "Swift",
