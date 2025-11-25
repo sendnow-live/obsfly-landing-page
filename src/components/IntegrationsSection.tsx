@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import ObsFlyLogo from './ObsFlyLogo';
 
 const integrations = [
   {
@@ -73,6 +75,46 @@ const integrations = [
     name: "Go",
     category: "Language",
     logo: "https://cdn.simpleicons.org/go/00ADD8",
+  },
+  {
+    name: "JavaScript",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/javascript/F7DF1E",
+  },
+  {
+    name: "TypeScript",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/typescript/3178C6",
+  },
+  {
+    name: "Ruby",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/ruby/CC342D",
+  },
+  {
+    name: "PHP",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/php/777BB4",
+  },
+  {
+    name: "Rust",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/rust/000000",
+  },
+  {
+    name: "Kotlin",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/kotlin/7F52FF",
+  },
+  {
+    name: "Swift",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/swift/F05138",
+  },
+  {
+    name: "Scala",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/scala/DC322F",
   },
   {
     name: "Prometheus",
@@ -187,12 +229,30 @@ const integrations = [
 ];
 
 export default function IntegrationsSection() {
+  const [radius, setRadius] = useState(280);
+
+  useEffect(() => {
+    const updateRadius = () => {
+      if (window.innerWidth < 640) {
+        setRadius(130);
+      } else if (window.innerWidth < 1024) {
+        setRadius(200);
+      } else {
+        setRadius(280);
+      }
+    };
+
+    updateRadius();
+    window.addEventListener('resize', updateRadius);
+    return () => window.removeEventListener('resize', updateRadius);
+  }, []);
+
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-100">
+          <Badge className="mb-4 bg-purple-100 text-[#593a6d] border-purple-200 hover:bg-purple-100">
             200+ Integrations
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -204,42 +264,62 @@ export default function IntegrationsSection() {
           </p>
           <Button
             size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-white group shadow-lg"
+            className="bg-[#593a6d] hover:bg-[#462d54] text-white group shadow-lg"
           >
             Explore All Integrations
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
 
-        {/* Integration Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mb-16">
-          {integrations.map((integration, index) => (
-            <Card
-              key={index}
-              className="group bg-white border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
-            >
-              <div className="p-6 flex flex-col items-center justify-center space-y-3 h-full">
-                {/* Logo */}
-                <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <img
-                    src={integration.logo}
-                    alt={`${integration.name} logo`}
-                    className="w-12 h-12 object-contain"
-                  />
-                </div>
+        {/* Central Hub Design */}
+        <div className="relative flex items-center justify-center mb-16 min-h-[400px] md:min-h-[600px] lg:min-h-[700px] overflow-hidden">
+          {/* Center Logo */}
+          <div className="absolute z-10 flex items-center justify-center">
+            <div className="bg-white rounded-full p-4 md:p-6 lg:p-8 shadow-2xl border-2 md:border-4 border-[#593a6d]">
+              <ObsFlyLogo className="w-8 h-8 md:w-20 md:h-20 lg:w-24 lg:h-24" />
+            </div>
+          </div>
 
-                {/* Integration Info */}
-                <div className="text-center">
-                  <h3 className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {integration.name}
-                  </h3>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {integration.category}
-                  </p>
+          {/* Language Integrations in Circular Layout */}
+          {integrations
+            .filter((i) => i.category === "Language")
+            .map((integration, index, arr) => {
+              const angle = (index * 360) / arr.length;
+              const x = Math.cos((angle * Math.PI) / 180) * radius;
+              const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+              return (
+                <div
+                  key={index}
+                  className="absolute group"
+                  style={{
+                    transform: `translate(${x}px, ${y}px)`,
+                  }}
+                >
+                  {/* Arrow pointing to center */}
+                  <div
+                    className="absolute left-1/2 top-1/2 w-12 md:w-20 lg:w-28 h-0.5 bg-gradient-to-l from-[#593a6d] to-transparent origin-left opacity-40"
+                    style={{
+                      transform: `rotate(${angle + 180}deg) translateY(-50%)`,
+                    }}
+                  />
+
+                  {/* Integration Logo */}
+                  <div className="relative bg-white rounded-full p-1 md:p-2.5 lg:p-3 shadow-lg border border-gray-200 md:border-2 hover:border-[#593a6d] hover:shadow-xl transition-all duration-300 cursor-pointer">
+                    <img
+                      src={integration.logo}
+                      alt={`${integration.name} logo`}
+                      className="w-5 h-5 md:w-9 md:h-9 lg:w-11 lg:h-11 object-contain group-hover:scale-110 transition-transform"
+                    />
+                    <div className="absolute -bottom-5 md:-bottom-7 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                      <p className="text-[9px] md:text-xs font-semibold text-gray-900">
+                        {integration.name}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              );
+            })}
         </div>
 
         {/* Features Section */}
@@ -285,7 +365,7 @@ export default function IntegrationsSection() {
           <div className="mt-8 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-600">
               Can't find your tool? We add new integrations every week.{" "}
-              <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
+              <a href="#" className="text-[#593a6d] hover:text-[#462d54] font-medium">
                 Request a custom integration
               </a>
             </p>
