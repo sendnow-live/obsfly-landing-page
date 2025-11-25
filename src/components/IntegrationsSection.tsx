@@ -234,7 +234,7 @@ export default function IntegrationsSection() {
   useEffect(() => {
     const updateRadius = () => {
       if (window.innerWidth < 640) {
-        setRadius(130);
+        setRadius(110);
       } else if (window.innerWidth < 1024) {
         setRadius(200);
       } else {
@@ -272,11 +272,11 @@ export default function IntegrationsSection() {
         </div>
 
         {/* Central Hub Design */}
-        <div className="relative flex items-center justify-center mb-16 min-h-[400px] md:min-h-[600px] lg:min-h-[700px] overflow-hidden">
+        <div className="relative flex items-center justify-center mb-24 md:mb-16 pt-4 pb-8 min-h-[380px] md:min-h-[600px] lg:min-h-[700px]">
           {/* Center Logo */}
-          <div className="absolute z-10 flex items-center justify-center">
-            <div className="bg-white rounded-full p-4 md:p-6 lg:p-8 shadow-2xl border-2 md:border-4 border-[#593a6d]">
-              <ObsFlyLogo className="w-8 h-8 md:w-20 md:h-20 lg:w-24 lg:h-24" />
+          <div className="absolute z-10 flex items-center justify-center" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <div className="bg-white rounded-full p-2.5 md:p-6 lg:p-8 shadow-2xl border-2 md:border-4 border-[#593a6d]">
+              <ObsFlyLogo className="w-9 h-9 md:w-20 md:h-20 lg:w-24 lg:h-24" />
             </div>
           </div>
 
@@ -293,26 +293,28 @@ export default function IntegrationsSection() {
                   key={index}
                   className="absolute group"
                   style={{
-                    transform: `translate(${x}px, ${y}px)`,
+                    top: '50%',
+                    left: '50%',
+                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
                   }}
                 >
                   {/* Arrow pointing to center */}
                   <div
-                    className="absolute left-1/2 top-1/2 w-12 md:w-20 lg:w-28 h-0.5 bg-gradient-to-l from-[#593a6d] to-transparent origin-left opacity-40"
+                    className="absolute left-1/2 top-1/2 w-10 md:w-20 lg:w-28 h-0.5 bg-gradient-to-l from-[#593a6d] to-transparent origin-left opacity-40"
                     style={{
                       transform: `rotate(${angle + 180}deg) translateY(-50%)`,
                     }}
                   />
 
                   {/* Integration Logo */}
-                  <div className="relative bg-white rounded-full p-1 md:p-2.5 lg:p-3 shadow-lg border border-gray-200 md:border-2 hover:border-[#593a6d] hover:shadow-xl transition-all duration-300 cursor-pointer">
+                  <div className="relative bg-white rounded-full p-1 md:p-2.5 lg:p-3 shadow-md md:shadow-lg border border-gray-200 md:border-2 hover:border-[#593a6d] hover:shadow-xl transition-all duration-300 cursor-pointer">
                     <img
                       src={integration.logo}
                       alt={`${integration.name} logo`}
-                      className="w-5 h-5 md:w-9 md:h-9 lg:w-11 lg:h-11 object-contain group-hover:scale-110 transition-transform"
+                      className="w-4 h-4 md:w-9 md:h-9 lg:w-11 lg:h-11 object-contain group-hover:scale-110 transition-transform"
                     />
                     <div className="absolute -bottom-5 md:-bottom-7 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                      <p className="text-[9px] md:text-xs font-semibold text-gray-900">
+                      <p className="text-[8px] md:text-xs font-semibold text-gray-900">
                         {integration.name}
                       </p>
                     </div>
