@@ -217,10 +217,11 @@ export default function IntegrationsSection() {
         {/* Central Hub Design */}
       {/* Central Hub Design */}
        {/* Central Hub Design */}
-        <div className="relative flex items-center justify-center mb-16 min-h-[600px]">
+       {/* Central Hub Design */}
+        <div className="relative flex items-center justify-center mb-16 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
           {/* Center Logo */}
           <div className="absolute z-10 flex items-center justify-center">
-            <ObsFlyLogo className="w-24 h-24" />
+            <ObsFlyLogo className="w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
           </div>
 
           {/* Language Integrations in Circular Layout */}
@@ -228,7 +229,10 @@ export default function IntegrationsSection() {
             .filter((i) => i.category === "Language" || i.category === "Runtime" || i.category === "Frontend" || i.category === "Framework")
             .map((integration, index, arr) => {
               const angle = (index * 360) / arr.length;
-              const radius = 280;
+              // Responsive radius - smaller on mobile
+              const radius = 120; // Fixed smaller radius for mobile
+              const arrowLength = 70;
+              
               const x = Math.cos((angle * Math.PI) / 180) * radius;
               const y = Math.sin((angle * Math.PI) / 180) * radius;
 
@@ -242,8 +246,9 @@ export default function IntegrationsSection() {
                 >
                   {/* Arrow pointing to center */}
                   <div
-                    className="absolute left-1/2 top-1/2 w-36 h-0.5 origin-left"
+                    className="absolute left-1/2 top-1/2 h-0.5 origin-left"
                     style={{
+                      width: `${arrowLength}px`,
                       transform: `rotate(${angle + 180}deg) translateY(-50%)`,
                       background: 'linear-gradient(to left, #593a6d, transparent)',
                     }}
@@ -253,7 +258,7 @@ export default function IntegrationsSection() {
                   <img
                     src={integration.logo}
                     alt={`${integration.name} logo`}
-                    className="w-12 h-12 object-contain hover:scale-125 transition-transform cursor-pointer"
+                    className="w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 object-contain hover:scale-125 transition-transform cursor-pointer"
                   />
                 </div>
               );
