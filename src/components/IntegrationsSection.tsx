@@ -1,80 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
-import ObsFlyLogo from './ObsFlyLogo';
 
 const integrations = [
-  {
-    name: "AWS",
-    category: "Cloud Provider",
-    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh6UuWb2GtonTAVAZ3NBuMTHIPTg1DLtSL3LlfFoeNFw94cJJiRFz-38E&s",
-  },
-  {
-    name: "Kubernetes",
-    category: "Orchestration",
-    logo: "https://cdn.simpleicons.org/kubernetes/326CE5",
-  },
-  {
-    name: "Docker",
-    category: "Container",
-    logo: "https://cdn.simpleicons.org/docker/2496ED",
-  },
-  {
-    name: "PostgreSQL",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/postgresql/4169E1",
-  },
-  {
-    name: "MongoDB",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/mongodb/47A248",
-  },
-  {
-    name: "Redis",
-    category: "Cache",
-    logo: "https://cdn.simpleicons.org/redis/DC382D",
-  },
-  {
-    name: "Nginx",
-    category: "Web Server",
-    logo: "https://cdn.simpleicons.org/nginx/009639",
-  },
-  {
-    name: "Apache",
-    category: "Web Server",
-    logo: "https://cdn.simpleicons.org/apache/D22128",
-  },
-  {
-    name: "Jenkins",
-    category: "CI/CD",
-    logo: "https://cdn.simpleicons.org/jenkins/D24939",
-  },
-  {
-    name: "GitHub",
-    category: "Version Control",
-    logo: "https://cdn.simpleicons.org/github/181717",
-  },
-  {
-    name: "Node.js",
-    category: "Runtime",
-    logo: "https://cdn.simpleicons.org/nodedotjs/339933",
-  },
   {
     name: "Python",
     category: "Language",
     logo: "https://cdn.simpleicons.org/python/3776AB",
-  },
-  {
-    name: "Java",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/openjdk/000000",
-  },
-  {
-    name: "Go",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/go/00ADD8",
   },
   {
     name: "JavaScript",
@@ -85,6 +18,16 @@ const integrations = [
     name: "TypeScript",
     category: "Language",
     logo: "https://cdn.simpleicons.org/typescript/3178C6",
+  },
+  {
+    name: "Java",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/openjdk/000000",
+  },
+  {
+    name: "Go",
+    category: "Language",
+    logo: "https://cdn.simpleicons.org/go/00ADD8",
   },
   {
     name: "Ruby",
@@ -102,129 +45,14 @@ const integrations = [
     logo: "https://cdn.simpleicons.org/rust/000000",
   },
   {
-    name: "Kotlin",
+    name: "C#",
     category: "Language",
-    logo: "https://cdn.simpleicons.org/kotlin/7F52FF",
+    logo: "https://cdn.simpleicons.org/csharp/239120",
   },
   {
     name: "Swift",
     category: "Language",
     logo: "https://cdn.simpleicons.org/swift/F05138",
-  },
-  {
-    name: "Scala",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/scala/DC322F",
-  },
-  {
-    name: "Prometheus",
-    category: "Monitoring",
-    logo: "https://cdn.simpleicons.org/prometheus/E6522C",
-  },
-  {
-    name: "Grafana",
-    category: "Visualization",
-    logo: "https://cdn.simpleicons.org/grafana/F46800",
-  },
-  {
-    name: "Elasticsearch",
-    category: "Search Engine",
-    logo: "https://cdn.simpleicons.org/elasticsearch/005571",
-  },
-  {
-    name: "MySQL",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/mysql/4479A1",
-  },
-  {
-    name: "RabbitMQ",
-    category: "Message Queue",
-    logo: "https://cdn.simpleicons.org/rabbitmq/FF6600",
-  },
-  {
-    name: "Kafka",
-    category: "Streaming",
-    logo: "https://cdn.simpleicons.org/apachekafka/231F20",
-  },
-  {
-    name: "Azure",
-    category: "Cloud Provider",
-    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEVTSDUI6ORj63sfV3zT4mst4DpZA9fRqsiM3UMq4qijxiN8KpLD4Cb4Fnw1b3b7HvHtQ&usqp=CAU",
-  },
-  {
-    name: "GCP",
-    category: "Cloud Provider",
-    logo: "https://cdn.simpleicons.org/googlecloud/4285F4",
-  },
-  {
-    name: "Terraform",
-    category: "IaC",
-    logo: "https://cdn.simpleicons.org/terraform/7B42BC",
-  },
-  {
-    name: "Ansible",
-    category: "Automation",
-    logo: "https://cdn.simpleicons.org/ansible/EE0000",
-  },
-  {
-    name: "Datadog",
-    category: "Monitoring",
-    logo: "https://cdn.simpleicons.org/datadog/632CA6",
-  },
-  {
-    name: "New Relic",
-    category: "APM",
-    logo: "https://cdn.simpleicons.org/newrelic/008C99",
-  },
-  {
-    name: "Splunk",
-    category: "Analytics",
-    logo: "https://cdn.simpleicons.org/splunk/000000",
-  },
-  {
-    name: "OpenTelemetry",
-    category: "Observability",
-    logo: "https://cdn.simpleicons.org/opentelemetry/000000",
-  },
-  {
-    name: "GitLab",
-    category: "CI/CD",
-    logo: "https://cdn.simpleicons.org/gitlab/FC6D26",
-  },
-  {
-    name: "React",
-    category: "Frontend",
-    logo: "https://cdn.simpleicons.org/react/61DAFB",
-  },
-  {
-    name: "Angular",
-    category: "Frontend",
-    logo: "https://cdn.simpleicons.org/angular/DD0031",
-  },
-  {
-    name: "Vue.js",
-    category: "Frontend",
-    logo: "https://cdn.simpleicons.org/vuedotjs/4FC08D",
-  },
-  {
-    name: "Django",
-    category: "Framework",
-    logo: "https://cdn.simpleicons.org/django/092E20",
-  },
-  {
-    name: "Flask",
-    category: "Framework",
-    logo: "https://cdn.simpleicons.org/flask/000000",
-  },
-  {
-    name: "Spring Boot",
-    category: "Framework",
-    logo: "https://cdn.simpleicons.org/springboot/6DB33F",
-  },
-  {
-    name: ".NET",
-    category: "Framework",
-    logo: "https://cdn.simpleicons.org/dotnet/512BD4",
   },
 ];
 
@@ -234,11 +62,11 @@ export default function IntegrationsSection() {
   useEffect(() => {
     const updateRadius = () => {
       if (window.innerWidth < 640) {
-        setRadius(110);
+        setRadius(150);
       } else if (window.innerWidth < 1024) {
-        setRadius(200);
+        setRadius(220);
       } else {
-        setRadius(280);
+        setRadius(300);
       }
     };
 
@@ -272,102 +100,186 @@ export default function IntegrationsSection() {
         </div>
 
         {/* Central Hub Design */}
-        <div className="relative flex items-center justify-center mb-24 md:mb-16 pt-4 pb-8 min-h-[380px] md:min-h-[600px] lg:min-h-[700px]">
-          {/* Center Logo */}
-          <div className="absolute z-10 flex items-center justify-center" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-            <div className="bg-white rounded-full p-2.5 md:p-6 lg:p-8 shadow-2xl border-2 md:border-4 border-[#593a6d]">
-              <ObsFlyLogo className="w-9 h-9 md:w-20 md:h-20 lg:w-24 lg:h-24" />
-            </div>
-          </div>
+        <div className="relative flex items-center justify-center mb-24 md:mb-32 pt-8 pb-16 min-h-[450px] md:min-h-[600px] lg:min-h-[700px]">
+          {/* Background Circle */}
+          <div 
+            className="absolute rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-purple-50 opacity-50"
+            style={{
+              width: `${radius * 2.3}px`,
+              height: `${radius * 2.3}px`,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
 
-          {/* Language Integrations in Circular Layout */}
-          {integrations
-            .filter((i) => i.category === "Language")
-            .map((integration, index, arr) => {
-              const angle = (index * 360) / arr.length;
-              const x = Math.cos((angle * Math.PI) / 180) * radius;
-              const y = Math.sin((angle * Math.PI) / 180) * radius;
+          {/* Center Container - for positioning reference */}
+          <div 
+            className="absolute" 
+            style={{
+              top: '50%',
+              left: '50%',
+              width: `${radius * 2}px`,
+              height: `${radius * 2}px`,
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            {/* Draw all arrows - REVERSED DIRECTION */}
+            {integrations.map((integration, index) => {
+              const angle = (index * 360) / integrations.length - 90; // Start from top
+              const angleRad = (angle * Math.PI) / 180;
+              
+              // Calculate positions - SWAPPED x1/y1 with x2/y2
+              const iconRadius = radius;
+              const centerRadius = 65;
+              
+              const x1 = Math.cos(angleRad) * centerRadius; // Now starts from center
+              const y1 = Math.sin(angleRad) * centerRadius;
+              const x2 = Math.cos(angleRad) * iconRadius; // Now ends at icon
+              const y2 = Math.sin(angleRad) * iconRadius;
 
               return (
-                <div
-                  key={index}
-                  className="absolute group"
+                <svg
+                  key={`arrow-${index}`}
+                  className="absolute"
                   style={{
                     top: '50%',
                     left: '50%',
-                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                    width: `${radius * 2}px`,
+                    height: `${radius * 2}px`,
+                    transform: 'translate(-50%, -50%)',
+                    overflow: 'visible',
+                    pointerEvents: 'none',
                   }}
                 >
-                  {/* Arrow pointing to center */}
-                  <div
-                    className="absolute left-1/2 top-1/2 w-10 md:w-20 lg:w-28 h-0.5 bg-gradient-to-l from-[#593a6d] to-transparent origin-left opacity-40"
-                    style={{
-                      transform: `rotate(${angle + 180}deg) translateY(-50%)`,
-                    }}
+                  <defs>
+                    <marker
+                      id={`arrow-${index}`}
+                      markerWidth="8"
+                      markerHeight="8"
+                      refX="7"
+                      refY="4"
+                      orient="auto"
+                      markerUnits="strokeWidth"
+                    >
+                      <path
+                        d="M0,0 L0,8 L8,4 z"
+                        fill="#593a6d"
+                      />
+                    </marker>
+                  </defs>
+                  <line
+                    x1={x1 + radius}
+                    y1={y1 + radius}
+                    x2={x2 + radius}
+                    y2={y2 + radius}
+                    stroke="#593a6d"
+                    strokeWidth="2.5"
+                    opacity="0.6"
+                    markerEnd={`url(#arrow-${index})`}
                   />
-
-                  {/* Integration Logo */}
-                  <div className="relative bg-white rounded-full p-1 md:p-2.5 lg:p-3 shadow-md md:shadow-lg border border-gray-200 md:border-2 hover:border-[#593a6d] hover:shadow-xl transition-all duration-300 cursor-pointer">
-                    <img
-                      src={integration.logo}
-                      alt={`${integration.name} logo`}
-                      className="w-4 h-4 md:w-9 md:h-9 lg:w-11 lg:h-11 object-contain group-hover:scale-110 transition-transform"
-                    />
-                    <div className="absolute -bottom-5 md:-bottom-7 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                      <p className="text-[8px] md:text-xs font-semibold text-gray-900">
-                        {integration.name}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                </svg>
               );
             })}
+          </div>
+
+          {/* Center Text - ObsFly */}
+          <div className="absolute z-20" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <div className="bg-white rounded-full px-6 py-4 md:px-8 md:py-6 lg:px-10 lg:py-7 shadow-2xl border-4 border-[#593a6d]">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#593a6d] tracking-tight">
+                ObsFly
+              </h3>
+              <p className="text-[10px] md:text-xs text-gray-600 text-center mt-1">
+                Integrations
+              </p>
+            </div>
+          </div>
+
+          {/* Integration Icons in Circular Layout */}
+          {integrations.map((integration, index) => {
+            const angle = (index * 360) / integrations.length - 90; // Start from top
+            const x = Math.cos((angle * Math.PI) / 180) * radius;
+            const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+            return (
+              <div
+                key={index}
+                className="absolute z-10"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                }}
+              >
+                {/* Integration Logo */}
+                <div className="relative bg-white rounded-full p-3 md:p-4 lg:p-5 shadow-xl border-3 border-gray-200 hover:border-[#593a6d] hover:shadow-2xl hover:scale-110 transition-all duration-300 cursor-pointer group">
+                  <img
+                    src={integration.logo}
+                    alt={`${integration.name} logo`}
+                    className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain"
+                  />
+                  {/* Label - shows on hover */}
+                  <div className="absolute -bottom-10 md:-bottom-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                    <p className="text-xs md:text-sm font-bold text-gray-900 bg-white px-3 py-1.5 rounded-lg shadow-lg border border-gray-200">
+                      {integration.name}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Features Section */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-8 md:p-10">
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-green-600" />
+                </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">OpenTelemetry Native</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-bold text-lg text-gray-900 mb-2">OpenTelemetry Native</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Built on open standards for maximum compatibility and flexibility.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">Zero Code Changes</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Zero Code Changes</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Auto-instrumentation means you can start monitoring without modifying your code.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-[#593a6d]" />
+                </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-1">Auto-Discovery</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-bold text-lg text-gray-900 mb-2">Auto-Discovery</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Automatically detect and configure integrations in your environment.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-            <p className="text-gray-600">
+          <div className="mt-10 pt-8 border-t border-gray-200 text-center">
+            <p className="text-gray-600 text-base">
               Can't find your tool? We add new integrations every week.{" "}
-              <a href="#" className="text-[#593a6d] hover:text-[#462d54] font-medium">
+              <a href="#" className="text-[#593a6d] hover:text-[#462d54] font-semibold underline decoration-2 underline-offset-4 hover:underline-offset-2 transition-all">
                 Request a custom integration
               </a>
             </p>
