@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
-
+ 
 const integrations = [
   {
     name: "Python",
@@ -55,10 +55,10 @@ const integrations = [
     logo: "https://cdn.simpleicons.org/swift/F05138",
   },
 ];
-
+ 
 export default function IntegrationsSection() {
   const [radius, setRadius] = useState(280);
-
+ 
   useEffect(() => {
     const updateRadius = () => {
       if (window.innerWidth < 640) {
@@ -66,15 +66,15 @@ export default function IntegrationsSection() {
       } else if (window.innerWidth < 1024) {
         setRadius(220);
       } else {
-        setRadius(300);
+        setRadius(250);
       }
     };
-
+ 
     updateRadius();
     window.addEventListener('resize', updateRadius);
     return () => window.removeEventListener('resize', updateRadius);
   }, []);
-
+ 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -98,11 +98,11 @@ export default function IntegrationsSection() {
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
-
+ 
         {/* Central Hub Design */}
-        <div className="relative flex items-center justify-center mb-24 md:mb-32 pt-8 pb-16 min-h-[450px] md:min-h-[600px] lg:min-h-[700px]">
+        <div className="relative flex items-center justify-center mb-24 md:mb-32 pt-8 pb-16 min-h-[450px] md:min-h-[550px] lg:min-h-[580px]">
           {/* Background Circle */}
-          <div 
+          <div
             className="absolute rounded-full bg-gradient-to-br from-purple-50 via-blue-50 to-purple-50 opacity-50"
             style={{
               width: `${radius * 2.3}px`,
@@ -112,10 +112,10 @@ export default function IntegrationsSection() {
               transform: 'translate(-50%, -50%)',
             }}
           />
-
+ 
           {/* Center Container - for positioning reference */}
-          <div 
-            className="absolute" 
+          <div
+            className="absolute"
             style={{
               top: '50%',
               left: '50%',
@@ -137,7 +137,7 @@ export default function IntegrationsSection() {
               const y1 = Math.sin(angleRad) * centerRadius;
               const x2 = Math.cos(angleRad) * iconRadius; // Now ends at icon
               const y2 = Math.sin(angleRad) * iconRadius;
-
+ 
               return (
                 <svg
                   key={`arrow-${index}`}
@@ -182,7 +182,7 @@ export default function IntegrationsSection() {
               );
             })}
           </div>
-
+ 
           {/* Center Text - ObsFly */}
           <div className="absolute z-20" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
             <div className="bg-white rounded-full px-6 py-4 md:px-8 md:py-6 lg:px-10 lg:py-7 shadow-2xl border-4 border-[#593a6d]">
@@ -194,13 +194,13 @@ export default function IntegrationsSection() {
               </p>
             </div>
           </div>
-
+ 
           {/* Integration Icons in Circular Layout */}
           {integrations.map((integration, index) => {
             const angle = (index * 360) / integrations.length - 90; // Start from top
             const x = Math.cos((angle * Math.PI) / 180) * radius;
             const y = Math.sin((angle * Math.PI) / 180) * radius;
-
+ 
             return (
               <div
                 key={index}
@@ -229,7 +229,7 @@ export default function IntegrationsSection() {
             );
           })}
         </div>
-
+ 
         {/* Features Section */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-8 md:p-10">
           <div className="grid md:grid-cols-3 gap-8">
@@ -246,7 +246,7 @@ export default function IntegrationsSection() {
                 </p>
               </div>
             </div>
-
+ 
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
@@ -260,7 +260,7 @@ export default function IntegrationsSection() {
                 </p>
               </div>
             </div>
-
+ 
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
@@ -275,7 +275,7 @@ export default function IntegrationsSection() {
               </div>
             </div>
           </div>
-
+ 
           <div className="mt-10 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-600 text-base">
               Can't find your tool? We add new integrations every week.{" "}
@@ -288,4 +288,4 @@ export default function IntegrationsSection() {
       </div>
     </section>
   );
-}
+                  }
