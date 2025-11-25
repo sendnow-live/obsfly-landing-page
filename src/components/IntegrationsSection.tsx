@@ -1,60 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import ObsFlyLogo from "./ObsFlyLogo";
 
 const integrations = [
-  {
-    name: "AWS",
-    category: "Cloud Provider",
-    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh6UuWb2GtonTAVAZ3NBuMTHIPTg1DLtSL3LlfFoeNFw94cJJiRFz-38E&s",
-  },
-  {
-    name: "Kubernetes",
-    category: "Orchestration",
-    logo: "https://cdn.simpleicons.org/kubernetes/326CE5",
-  },
-  {
-    name: "Docker",
-    category: "Container",
-    logo: "https://cdn.simpleicons.org/docker/2496ED",
-  },
-  {
-    name: "PostgreSQL",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/postgresql/4169E1",
-  },
-  {
-    name: "MongoDB",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/mongodb/47A248",
-  },
-  {
-    name: "Redis",
-    category: "Cache",
-    logo: "https://cdn.simpleicons.org/redis/DC382D",
-  },
-  {
-    name: "Nginx",
-    category: "Web Server",
-    logo: "https://cdn.simpleicons.org/nginx/009639",
-  },
-  {
-    name: "Apache",
-    category: "Web Server",
-    logo: "https://cdn.simpleicons.org/apache/D22128",
-  },
-  {
-    name: "Jenkins",
-    category: "CI/CD",
-    logo: "https://cdn.simpleicons.org/jenkins/D24939",
-  },
-  {
-    name: "GitHub",
-    category: "Version Control",
-    logo: "https://cdn.simpleicons.org/github/181717",
-  },
   {
     name: "Node.js",
     category: "Runtime",
@@ -74,81 +24,6 @@ const integrations = [
     name: "Go",
     category: "Language",
     logo: "https://cdn.simpleicons.org/go/00ADD8",
-  },
-  {
-    name: "Prometheus",
-    category: "Monitoring",
-    logo: "https://cdn.simpleicons.org/prometheus/E6522C",
-  },
-  {
-    name: "Grafana",
-    category: "Visualization",
-    logo: "https://cdn.simpleicons.org/grafana/F46800",
-  },
-  {
-    name: "Elasticsearch",
-    category: "Search Engine",
-    logo: "https://cdn.simpleicons.org/elasticsearch/005571",
-  },
-  {
-    name: "MySQL",
-    category: "Database",
-    logo: "https://cdn.simpleicons.org/mysql/4479A1",
-  },
-  {
-    name: "RabbitMQ",
-    category: "Message Queue",
-    logo: "https://cdn.simpleicons.org/rabbitmq/FF6600",
-  },
-  {
-    name: "Kafka",
-    category: "Streaming",
-    logo: "https://cdn.simpleicons.org/apachekafka/231F20",
-  },
-  {
-    name: "Azure",
-    category: "Cloud Provider",
-    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEVTSDUI6ORj63sfV3zT4mst4DpZA9fRqsiM3UMq4qijxiN8KpLD4Cb4Fnw1b3b7HvHtQ&usqp=CAU",
-  },
-  {
-    name: "GCP",
-    category: "Cloud Provider",
-    logo: "https://cdn.simpleicons.org/googlecloud/4285F4",
-  },
-  {
-    name: "Terraform",
-    category: "IaC",
-    logo: "https://cdn.simpleicons.org/terraform/7B42BC",
-  },
-  {
-    name: "Ansible",
-    category: "Automation",
-    logo: "https://cdn.simpleicons.org/ansible/EE0000",
-  },
-  {
-    name: "Datadog",
-    category: "Monitoring",
-    logo: "https://cdn.simpleicons.org/datadog/632CA6",
-  },
-  {
-    name: "New Relic",
-    category: "APM",
-    logo: "https://cdn.simpleicons.org/newrelic/008C99",
-  },
-  {
-    name: "Splunk",
-    category: "Analytics",
-    logo: "https://cdn.simpleicons.org/splunk/000000",
-  },
-  {
-    name: "OpenTelemetry",
-    category: "Observability",
-    logo: "https://cdn.simpleicons.org/opentelemetry/000000",
-  },
-  {
-    name: "GitLab",
-    category: "CI/CD",
-    logo: "https://cdn.simpleicons.org/gitlab/FC6D26",
   },
   {
     name: "React",
@@ -187,9 +62,59 @@ const integrations = [
   },
 ];
 
-export default function IntegrationsSection() {
+interface Dimensions {
+  radius: number;
+  arrowLength: number;
+  logoSize: number;
+  iconSize: number;
+}
+
+export default function IntegrationsSection(): JSX.Element {
+  const [dimensions, setDimensions] = useState<Dimensions>({ 
+    radius: 280, 
+    arrowLength: 180, 
+    logoSize: 96, 
+    iconSize: 48 
+  });
+
+  useEffect(() => {
+    const updateDimensions = (): void => {
+      const width = window.innerWidth;
+      let radius: number;
+      let arrowLength: number;
+      let logoSize: number;
+      let iconSize: number;
+      
+      if (width < 640) {
+        // Mobile
+        radius = 110;
+        arrowLength = 70;
+        logoSize = 40;
+        iconSize = 24;
+      } else if (width < 1024) {
+        // Tablet
+        radius = 200;
+        arrowLength = 130;
+        logoSize = 64;
+        iconSize = 36;
+      } else {
+        // Desktop
+        radius = 280;
+        arrowLength = 180;
+        logoSize = 96;
+        iconSize = 48;
+      }
+      
+      setDimensions({ radius, arrowLength, logoSize, iconSize });
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
@@ -212,58 +137,72 @@ export default function IntegrationsSection() {
           </Button>
         </div>
 
-        {/* Integration Cards Grid */}
-       {/* Central Hub Design */}
         {/* Central Hub Design */}
-      {/* Central Hub Design */}
-       {/* Central Hub Design */}
-       {/* Central Hub Design */}
-        <div className="relative flex items-center justify-center mb-16 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
-          {/* Center Logo */}
-          <div className="absolute z-10 flex items-center justify-center">
-            <ObsFlyLogo className="w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
-          </div>
-
-          {/* Language Integrations in Circular Layout */}
-          {integrations
-            .filter((i) => i.category === "Language" || i.category === "Runtime" || i.category === "Frontend" || i.category === "Framework")
-            .map((integration, index, arr) => {
-              const angle = (index * 360) / arr.length;
-              // Responsive radius - smaller on mobile
-              const radius = 120; // Fixed smaller radius for mobile
-              const arrowLength = 70;
+        <div className="relative w-full mx-auto mb-16 min-h-[320px] sm:min-h-[500px] lg:min-h-[650px]" style={{ maxWidth: '1200px' }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative" style={{ width: `${dimensions.radius * 2}px`, height: `${dimensions.radius * 2}px` }}>
               
-              const x = Math.cos((angle * Math.PI) / 180) * radius;
-              const y = Math.sin((angle * Math.PI) / 180) * radius;
+              {/* Center Logo */}
+              <div 
+                className="absolute z-10"
+                style={{
+                  width: `${dimensions.logoSize}px`,
+                  height: `${dimensions.logoSize}px`,
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              >
+                <ObsFlyLogo className="w-full h-full" />
+              </div>
 
-              return (
-                <div
-                  key={index}
-                  className="absolute group"
-                  style={{
-                    transform: `translate(${x}px, ${y}px)`,
-                  }}
-                >
-                  {/* Arrow pointing to center */}
-                  <div
-                    className="absolute left-1/2 top-1/2 h-0.5 origin-left"
-                    style={{
-                      width: `${arrowLength}px`,
-                      transform: `rotate(${angle + 180}deg) translateY(-50%)`,
-                      background: 'linear-gradient(to left, #593a6d, transparent)',
-                    }}
-                  />
+              {/* Language Integrations in Circular Layout */}
+              {integrations.map((integration, index) => {
+                const angle = (index * 360) / integrations.length - 90; // Start from top
+                const radian = (angle * Math.PI) / 180;
+                const x = Math.cos(radian) * dimensions.radius;
+                const y = Math.sin(radian) * dimensions.radius;
 
-                  {/* Integration Logo */}
-                  <img
-                    src={integration.logo}
-                    alt={`${integration.name} logo`}
-                    className="w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 object-contain hover:scale-125 transition-transform cursor-pointer"
-                  />
-                </div>
-              );
-            })}
+                return (
+                  <div key={index}>
+                    {/* Arrow line pointing to center */}
+                    <div
+                      className="absolute pointer-events-none"
+                      style={{
+                        width: `${dimensions.radius - dimensions.logoSize / 2}px`,
+                        height: '1px',
+                        background: 'linear-gradient(to right, transparent, #593a6d)',
+                        left: '50%',
+                        top: '50%',
+                        transform: `rotate(${angle}deg)`,
+                        transformOrigin: 'left center',
+                      }}
+                    />
+
+                    {/* Integration Logo */}
+                    <div
+                      className="absolute"
+                      style={{
+                        left: '50%',
+                        top: '50%',
+                        width: `${dimensions.iconSize}px`,
+                        height: `${dimensions.iconSize}px`,
+                        transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                      }}
+                    >
+                      <img
+                        src={integration.logo}
+                        alt={`${integration.name} logo`}
+                        className="w-full h-full object-contain hover:scale-125 transition-transform cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
+
         {/* Features Section */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8">
           <div className="grid md:grid-cols-3 gap-8">
