@@ -5,6 +5,41 @@ import { useState, useEffect } from "react";
  
 const integrations = [
   {
+    name: "AWS",
+    category: "Cloud Provider",
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh6UuWb2GtonTAVAZ3NBuMTHIPTg1DLtSL3LlfFoeNFw94cJJiRFz-38E&s",
+  },
+  {
+    name: "Kubernetes",
+    category: "Orchestration",
+    logo: "https://cdn.simpleicons.org/kubernetes/326CE5",
+  },
+  {
+    name: "Docker",
+    category: "Container",
+    logo: "https://cdn.simpleicons.org/docker/2496ED",
+  },
+  {
+    name: "MongoDB",
+    category: "Database",
+    logo: "https://cdn.simpleicons.org/mongodb/47A248",
+  },
+  {
+    name: "MySQL",
+    category: "Database",
+    logo: "https://cdn.simpleicons.org/mysql/4479A1",
+  },
+  {
+    name: "Kafka",
+    category: "Streaming",
+    logo: "https://cdn.simpleicons.org/apachekafka/231F20",
+  },
+  {
+    name: "Azure",
+    category: "Cloud Provider",
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEVTSDUI6ORj63sfV3zT4mst4DpZA9fRqsiM3UMq4qijxiN8KpLD4Cb4Fnw1b3b7HvHtQ&usqp=CAU",
+  },
+  {
     name: "Python",
     category: "Language",
     logo: "https://cdn.simpleicons.org/python/3776AB",
@@ -15,14 +50,9 @@ const integrations = [
     logo: "https://cdn.simpleicons.org/javascript/F7DF1E",
   },
   {
-    name: "TypeScript",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/typescript/3178C6",
-  },
-  {
     name: "Java",
     category: "Language",
-    logo: "https://cdn.simpleicons.org/openjdk/000000",
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaZWkwcHK_g5_g3yZpEu9W-4bWwpX4wzzWBA&s",
   },
   {
     name: "Go",
@@ -38,21 +68,6 @@ const integrations = [
     name: "PHP",
     category: "Language",
     logo: "https://cdn.simpleicons.org/php/777BB4",
-  },
-  {
-    name: "Rust",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/rust/000000",
-  },
-  {
-    name: "C#",
-    category: "Language",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png",
-  },
-  {
-    name: "Swift",
-    category: "Language",
-    logo: "https://cdn.simpleicons.org/swift/F05138",
   },
 ];
  
@@ -185,8 +200,8 @@ export default function IntegrationsSection() {
  
           {/* Center Text - ObsFly */}
           <div className="absolute z-20" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-            <div className="bg-white rounded-full px-6 py-4 md:px-8 md:py-6 lg:px-10 lg:py-7 shadow-2xl border-4 border-[#593a6d]">
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#593a6d] tracking-tight">
+            <div className="bg-white rounded-full px-6 py-4 md:px-8 md:py-6 lg:px-10 lg:py-7 shadow-2xl ">
+              <h3 className="text-2xl md:text-3xl lg:text-2xl font-bold text-[#593a6d] tracking-tight">
                 ObsFly
               </h3>
               <p className="text-[10px] md:text-xs text-gray-600 text-center mt-1">
@@ -212,7 +227,7 @@ export default function IntegrationsSection() {
                 }}
               >
                 {/* Integration Logo */}
-                <div className="relative bg-white rounded-full p-3 md:p-4 lg:p-5 shadow-xl border-3 border-gray-200 hover:border-[#593a6d] hover:shadow-2xl hover:scale-110 transition-all duration-300 cursor-pointer group">
+                <div className="relative bg-white rounded-full p-3 md:p-4 lg:p-5 shadow-xl border-3 border-gray-200 hover:border-[#593a6d] hover:shadow-2xl hover:scale-110 transition-all duration-300 cursor-pointer group" style={{ margin: '15px' }}>
                   <img
                     src={integration.logo}
                     alt={`${integration.name} logo`}
@@ -288,4 +303,4 @@ export default function IntegrationsSection() {
       </div>
     </section>
   );
-                  }
+}
